@@ -1,4 +1,4 @@
-const loadNews = async () => {
+const loadNews = async (news_default) => {
     const url = 'https://openapi.programming-hero.com/api/news/categories';
     //const url3 = `https://openapi.programming-hero.com/api/news/${news_id}`;
     //const url3 = 'https://openapi.programming-hero.com/api/news/2e78e5e0310c2e9adbb6efb1a263e745';
@@ -29,6 +29,7 @@ const loadNewsDetails = async (category_id) => {
     const data = await res.json();
     displayNews(data.data);
 }
+
 const displayNews = newsInfo => {
     const newsDetails = document.getElementById('news-details');
     newsDetails.textContent = '';
@@ -52,7 +53,9 @@ const displayNews = newsInfo => {
             `;
         newsDetails.appendChild(newsDetailDiv);
     }
-
 }
+
+loadNewsDetails('08');
 loadNews();
+
 
