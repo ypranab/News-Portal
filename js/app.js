@@ -57,10 +57,10 @@ const displayNews = newsInfo => {
                         <img class="w-100 rounded-circle" src="${newsSingle.author.img}" alt="">
                         </div>
                         <div class="col-5">
-                        <p class="card-text">${newsSingle.author.name}</small></p>
+                        <p class="card-text">${newsSingle.author.name ? newsSingle.author.name : 'Author Unvailable'}</small></p>
                         </div>
                         <div class="col-6">
-                        <p class="card-text"><i class="fa-solid fa-eye"></i>${newsSingle.total_view}</small></p>
+                        <p class="card-text"><i class="fa-solid fa-eye"></i>${newsSingle.total_view ? newsSingle.total_view : 'No views'}</small></p>
                         </div>
                         </div>
                         <button onclick="newsIdDetails('${newsSingle._id}')" class="btn btn-warning mt-2" data-bs-toggle="modal" data-bs-target="#newsDetailModal">Show Details</button>
@@ -98,6 +98,7 @@ const loadNewsModal = modalNewsDetail => {
     modalDetails.innerHTML = `
     <img src="${modalNewsDetail[0].image_url}" class="mw-100"></img>
     <p>Author: ${modalNewsDetail[0].author.name ? modalNewsDetail[0].author.name : 'No Author Information'}</p>
+    <p>View: ${modalNewsDetail[0].total_view ? modalNewsDetail[0].total_view : 'No Data Available'}</p>
     <p>${modalNewsDetail[0].details}</p>
     `;
 }
