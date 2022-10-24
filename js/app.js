@@ -1,7 +1,5 @@
 const loadNews = async (news_default) => {
     const url = 'https://openapi.programming-hero.com/api/news/categories';
-    //const url3 = `https://openapi.programming-hero.com/api/news/${news_id}`;
-    //const url3 = 'https://openapi.programming-hero.com/api/news/2e78e5e0310c2e9adbb6efb1a263e745';
     const res = await fetch(url);
     const data = await res.json();
     newsCatagoriesShow(data.data.news_category);
@@ -48,20 +46,20 @@ const displayNews = newsInfo => {
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
-                            <h5 class="card-title">${newsSingle.title}</h5>
-                            <p class="card-text">${newsSingle.details.slice(0, 500)}...</p>
-                            <div class="row">
-                                <div class="col-1">
-                                    <img class="w-100 rounded-circle" src="${newsSingle.author.img}" alt="">
-                                </div>
-                                <div class="col-5">
-                                <p class="card-text">${newsSingle.author.name}</small></p>
-                                </div>
-                                <div class="col-6">
-                                <p class="card-text"><i class="fa-solid fa-eye"></i>${newsSingle.total_view}</small></p>
-                                </div>
-                            </div>
-                            <button onclick="newsIdDetails('${newsSingle._id}')" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newsDetailModal">Show Details</button>
+                        <h5 class="card-title">${newsSingle.title}</h5>
+                        <p class="card-text">${newsSingle.details.slice(0, 500)}...</p>
+                        <div class="row">
+                        <div class="col-1">
+                        <img class="w-100 rounded-circle" src="${newsSingle.author.img}" alt="">
+                        </div>
+                        <div class="col-5">
+                        <p class="card-text">${newsSingle.author.name}</small></p>
+                        </div>
+                        <div class="col-6">
+                        <p class="card-text"><i class="fa-solid fa-eye"></i>${newsSingle.total_view}</small></p>
+                        </div>
+                        </div>
+                        <button onclick="newsIdDetails('${newsSingle._id}')" class="btn btn-warning mt-2" data-bs-toggle="modal" data-bs-target="#newsDetailModal">Show Details</button>
                         </div>
                     </div>
                 </div>
@@ -88,14 +86,15 @@ const newsIdDetails = async news_id => {
     const data = await res.json();
     loadNewsModal(data.data);
 }
-const loadNewsModal = newsGet => {
-    console.log(newsGet);
+const loadNewsModal = modalNewsDetail => {
+    console.log(modalNewsDetail);
     const modalTitle = document.getElementById('newsDetailModalLabel');
-    modalTitle.innerText = newsGet[0].title;
+    modalTitle.innerText = modalNewsDetail[0].title;
     const modalDetails = document.getElementById('modal-details');
     modalDetails.innerHTML = `
-    <p>Author: ${newsGet[0].author.name ? newsGet[0].author.name : 'No Author Information'}</p>
-    <p>${newsGet[0].details}</p>
+    <img src="${modalNewsDetail[0].image_url}" class="mw-100"></img>
+    <p>Author: ${modalNewsDetail[0].author.name ? modalNewsDetail[0].author.name : 'No Author Information'}</p>
+    <p>${modalNewsDetail[0].details}</p>
     `;
 }
 
