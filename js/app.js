@@ -10,11 +10,10 @@ const newsCatagoriesShow = (news) => {
     toggleSpinner(false);
 
     for (const newsCatagory of news) {
-        const newsDiv = document.createElement('span');
+        const newsDiv = document.createElement('div');
+        newsDiv.classList.add('col-md-auto')
         newsDiv.innerHTML = `
-        <span class='mb-5'>
         <button onclick="loadNewsDetails('${newsCatagory.category_id}')" class="btn btn-light">${newsCatagory.category_name}</button>
-        </span>
         `;
         newsCatagories.appendChild(newsDiv);
         //console.log(newsCatagory.category_id);
