@@ -35,19 +35,24 @@ const loadNewsDetails = async (category_id) => {
 const displayNews = newsInfo => {
     const newsDetails = document.getElementById('news-details');
     newsDetails.textContent = '';
-    //console.log(newsInfo);
+    //console.log(newsInfo.length);
+
+    if (newsInfo.length === 0)
+        newsDetails.innerHTML = '<h2 class="text-warning text-center mt-5">No News Available</h2>';
+
     for (const newsSingle of newsInfo) {
         const newsDetailDiv = document.createElement('div');
+
         newsDetailDiv.classList.add('card');
         newsDetailDiv.innerHTML = `
-        <div class="row g-0">
-                    <div class="col-md-4">
-                        <img src="${newsSingle.thumbnail_url}" class="img-fluid rounded-start" alt="...">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
+            <div class="row g-0">
+            <div class="col-md-4">
+                <img src="${newsSingle.thumbnail_url}" class="img-fluid rounded-start" alt="...">
+            </div>
+                <div class="col-md-8">
+                    <div class="card-body">
                         <h5 class="card-title">${newsSingle.title}</h5>
-                        <p class="card-text">${newsSingle.details.slice(0, 500)}...</p>
+                        <p class="card-text">${newsSingle.details.slice(0, 350)}...</p>
                         <div class="row">
                         <div class="col-1">
                         <img class="w-100 rounded-circle" src="${newsSingle.author.img}" alt="">
@@ -65,7 +70,7 @@ const displayNews = newsInfo => {
                 </div>
             `;
         newsDetails.appendChild(newsDetailDiv);
-        //console.log(newsSingle);
+        console.log(newsSingle);
     }
     toggleSpinner(true);
 }
