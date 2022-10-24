@@ -35,7 +35,6 @@ const loadNewsDetails = async (category_id) => {
 }
 
 const displayNews = newsInfo => {
-
     const newsDetails = document.getElementById('news-details');
     newsDetails.textContent = '';
     //console.log(newsInfo);
@@ -45,18 +44,30 @@ const displayNews = newsInfo => {
         newsDetailDiv.innerHTML = `
         <div class="row g-0">
                     <div class="col-md-4">
-                        <img src="${newsSingle.image_url}" class="img-fluid rounded-start" alt="...">
+                        <img src="${newsSingle.thumbnail_url}" class="img-fluid rounded-start" alt="...">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
                             <h5 class="card-title">${newsSingle.title}</h5>
-                            <p class="card-text">${newsSingle.details.slice(0, 500)}</p>
-                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                            <p class="card-text">${newsSingle.details.slice(0, 500)}...</p>
+                            <div class="row">
+                                <div class="col-1">
+                                    <img class="w-100 rounded-circle" src="${newsSingle.author.img}" alt="">
+                                </div>
+                                <div class="col-5">
+                                <p class="card-text">${newsSingle.author.name}</small></p>
+                                </div>
+                                <div class="col-6">
+                                <p class="card-text"><i class="fa-solid fa-eye"></i>${newsSingle.total_view}</small></p>
+                                </div>
+                            </div>
+                            <button onclick="newsIdDetails('${newsSingle._id}')" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newsDetailModal">Show Details</button>
                         </div>
                     </div>
                 </div>
             `;
         newsDetails.appendChild(newsDetailDiv);
+        //console.log(newsSingle);
     }
     toggleSpinner(true);
 }
@@ -71,7 +82,24 @@ const toggleSpinner = isLoading => {
     }
 }
 
-//loadNewsDetails('08');
+const newsIdDetails = async news_id => {
+    const url = `https://openapi.programming-hero.com/api/news/${news_id}`
+    const res = await fetch(url);
+    const data = await res.json();
+    loadNewsModal(data.data);
+}
+const loadNewsModal = newsGet => {
+    console.log(newsGet);
+    const modalTitle = document.getElementById('newsDetailModalLabel');
+    modalTitle.innerText = newsGet[0].title;
+    const modalDetails = document.getElementById('modal-details');
+    modalDetails.innerHTML = `
+    <p>Author: ${newsGet[0].author.name ? newsGet[0].author.name : 'No Author Information'}</p>
+    <p>${newsGet[0].details}</p>
+    `;
+}
+
+loadNewsDetails('04');
 loadNews();
 
 
