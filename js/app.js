@@ -9,12 +9,12 @@ const loadNews = async (news_default) => {
 
 const newsCatagoriesShow = (news) => {
     const newsCatagories = document.getElementById('news-catagories');
+    toggleSpinner(false);
 
     for (const newsCatagory of news) {
         const newsDiv = document.createElement('span');
-        newsDiv.classList.add('p-2');
         newsDiv.innerHTML = `
-        <span class='p-3 mb-5'>
+        <span class='mb-5'>
         <button onclick="loadNewsDetails('${newsCatagory.category_id}')" class="btn btn-light">${newsCatagory.category_name}</button>
         </span>
         `;
@@ -24,6 +24,8 @@ const newsCatagoriesShow = (news) => {
 }
 
 const loadNewsDetails = async (category_id) => {
+    toggleSpinner(false);
+
     const url2 = `https://openapi.programming-hero.com/api/news/category/${category_id}`;
     const res = await fetch(url2);
     const data = await res.json();
@@ -31,9 +33,10 @@ const loadNewsDetails = async (category_id) => {
 }
 
 const displayNews = newsInfo => {
+
     const newsDetails = document.getElementById('news-details');
     newsDetails.textContent = '';
-    console.log(newsInfo);
+    //console.log(newsInfo);
     for (const newsSingle of newsInfo) {
         const newsDetailDiv = document.createElement('div');
         newsDetailDiv.classList.add('card');
@@ -52,6 +55,18 @@ const displayNews = newsInfo => {
                 </div>
             `;
         newsDetails.appendChild(newsDetailDiv);
+    }
+    toggleSpinner(true);
+
+}
+
+const toggleSpinner = isLoading => {
+    const loaderSection = document.getElementById('loader');
+    if (!isLoading) {
+        loaderSection.classList.remove('d-none')
+    }
+    else {
+        loaderSection.classList.add('d-none');
     }
 }
 
