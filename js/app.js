@@ -24,6 +24,8 @@ const newsCatagoriesShow = (news) => {
 }
 
 const loadNewsDetails = async (category_id) => {
+    const newsDetails = document.getElementById('news-details');
+    newsDetails.textContent = '';
     toggleSpinner(false);
 
     const url2 = `https://openapi.programming-hero.com/api/news/category/${category_id}`;
@@ -57,7 +59,6 @@ const displayNews = newsInfo => {
         newsDetails.appendChild(newsDetailDiv);
     }
     toggleSpinner(true);
-
 }
 
 const toggleSpinner = isLoading => {
@@ -70,7 +71,7 @@ const toggleSpinner = isLoading => {
     }
 }
 
-loadNewsDetails('08');
+//loadNewsDetails('08');
 loadNews();
 
 
